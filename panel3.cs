@@ -200,7 +200,7 @@ namespace sift {
         private void showPatternToolStripMenuItem_Click(object sender, EventArgs e) {
             if (renameDataGrid.SelectedCells.Count > 0) {
                 DataGridViewCell cell = renameDataGrid.SelectedCells[0];
-                Pattern pattern = new Pattern(renameDataGrid.Rows[cell.RowIndex].Cells["file"].Value.ToString(), renameDataGrid.Rows.Count.ToString().Length, cell.RowIndex);
+                Pattern pattern = new Pattern(targetDataGrid.Rows[cell.RowIndex].Cells["file"].Value.ToString(), targetDataGrid.Rows.Count.ToString().Length, cell.RowIndex);
                 pattern.ShowDialog();
             }
         }
@@ -284,9 +284,9 @@ namespace sift {
                     // 名前変更処理
                     for (int i = 0; i < renameDataGrid.Rows.Count; i++) {
                         renameDataGrid.Rows[i].Cells["file"].Value =
-                            rn.convert(renameDataGrid.Rows[i].Cells["file"].Value.ToString());
+                            rn.convert(targetDataGrid.Rows[i].Cells["file"].Value.ToString());
                         renameDataGrid.Rows[i].Cells["path"].Value =
-                            Path.GetDirectoryName(renameDataGrid.Rows[i].Cells["path"].Value.ToString())
+                            Path.GetDirectoryName(targetDataGrid.Rows[i].Cells["path"].Value.ToString())
                             + "\\" + renameDataGrid.Rows[i].Cells["file"].Value;
                     }
                 }

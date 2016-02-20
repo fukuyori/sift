@@ -71,6 +71,33 @@ namespace sift.Properties {
         }
         
         /// <summary>
+        ///   Use (Only folder structure ignore) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string fc_ignore {
+            get {
+                return ResourceManager.GetString("fc_ignore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Not Use に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string fc_notuse {
+            get {
+                return ResourceManager.GetString("fc_notuse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Use に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string fc_use {
+            get {
+                return ResourceManager.GetString("fc_use", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Bitmap folder {
@@ -160,6 +187,15 @@ namespace sift.Properties {
         internal static string messagebox7 {
             get {
                 return ResourceManager.GetString("messagebox7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   FastCopy.exe Not Found に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string notfound {
+            get {
+                return ResourceManager.GetString("notfound", resourceCulture);
             }
         }
         

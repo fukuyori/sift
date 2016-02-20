@@ -121,6 +121,15 @@
   <data name="erase" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\erase.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="fc_ignore" xml:space="preserve">
+    <value>Use (Only folder structure ignore)</value>
+  </data>
+  <data name="fc_notuse" xml:space="preserve">
+    <value>Not Use</value>
+  </data>
+  <data name="fc_use" xml:space="preserve">
+    <value>Use</value>
+  </data>
   <data name="folder" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\folder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -150,6 +159,9 @@
   </data>
   <data name="messagebox7" xml:space="preserve">
     <value>{0:#,0} files processed.</value>
+  </data>
+  <data name="notfound" xml:space="preserve">
+    <value>FastCopy.exe Not Found</value>
   </data>
   <data name="right" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\right.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

@@ -3,6 +3,7 @@ using System.Data;
 using System.Windows.Forms;
 using System.IO;
 using System.Data.SQLite;
+using System.Diagnostics;
 
 namespace sift {
     public partial class sift : Form {
@@ -24,7 +25,7 @@ namespace sift {
         }
 
         private void sourceDataGrid_CurrentCellChanged(object sender, EventArgs e) {
-                adapter.Update(dtSource);
+            adapter.Update(dtSource);
         }
 
         // /////////////////////////////////////////////////////////////////////////////
@@ -82,6 +83,23 @@ namespace sift {
             System.Text.StringBuilder s = new System.Text.StringBuilder();
             for (int i = 0; i < sourceDataGrid.Rows.Count; i++) {
                 s.Append(sourceDataGrid.Rows[i].Cells["path"].Value.ToString() + Environment.NewLine);
+            }
+            Clipboard.SetText(s.ToString());
+        }
+
+        /// <summary>
+        /// コンテキストメニュー 完全なパスでクリップボードにコピー
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void copyAllToolStripMenuItem2_Click(object sender, EventArgs e) {
+            sourceFullPathCopyToClipboard();
+        }
+
+        private void sourceFullPathCopyToClipboard() {
+            System.Text.StringBuilder s = new System.Text.StringBuilder();
+            for (int i = 0; i < sourceDataGrid.Rows.Count; i++) {
+                s.Append(sourcePath.Text + sourceDataGrid.Rows[i].Cells["path"].Value.ToString() + Environment.NewLine);
             }
             Clipboard.SetText(s.ToString());
         }
@@ -163,6 +181,40 @@ namespace sift {
             checkBox1.Checked = false;
         }
 
+        /// <summary>
+        /// コンテキストメニュー　ファイルを開く
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void openFileToolStripMenuItem_Click(object sender, EventArgs s) {
+            String name;
+
+            if (sourceDataGrid.SelectedCells.Count > 0) {
+
+                DataGridViewCell cell = sourceDataGrid.SelectedCells[0];
+                name = sourcePath.Text + sourceDataGrid.Rows[cell.RowIndex].Cells["path"].Value.ToString();
+                Process p = Process.Start(name);
+            }
+        }
+
+        /// <summary>
+        /// コンテキストメニュー　フォルダを開く
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void openFolderToolStripMenuItem_Click(object sender, EventArgs e) {
+            String name;
+
+            if (sourceDataGrid.SelectedCells.Count > 0) {
+
+                DataGridViewCell cell = sourceDataGrid.SelectedCells[0];
+                name = sourcePath.Text + sourceDataGrid.Rows[cell.RowIndex].Cells["path"].Value.ToString();
+                //オプションに"/select"を指定して開く
+                System.Diagnostics.Process.Start(
+                    "EXPLORER.EXE", "/select,\"" + name + "\"");
+            }
+        }
+
         // /////////////////////////////////////////////////////////
         /// <summary>
         /// パネル１からコピー実行
@@ -171,8 +223,13 @@ namespace sift {
         /// <returns></returns>
         // /////////////////////////////////////////////////////////
         private int copyScr1() {
-            String inf, outf;
+            string inf, outf;
+            string cmd = "";
+            string path = null;
             int cnt = 0;
+            string FastCopyTemp = Path.GetTempPath() + "sift.tmp";
+            StreamWriter writer = null;
+            System.Diagnostics.Process fc;
 
             allButtons(false);
 
@@ -185,9 +242,113 @@ namespace sift {
             toolStripProgressBar1.Maximum = dbCount(true);
             toolStripProgressBar1.Value = 0;
 
-            using (SQLiteCommand cmd = cn.CreateCommand()) {
-                cmd.CommandText = "SELECT path, file FROM flist WHERE checked = 1";
-                using (SQLiteDataReader reader = cmd.ExecuteReader()) {
+            //
+            // FastCopyを使用する
+            //
+            if (FastCopyPath != "" && checkBox_overwrite.Checked && 
+                (!checkBox_keepfolder.Checked ||
+                (checkBox_keepfolder.Checked && !FastCopyStructureIgnore))) {
+
+                // 差分（最新日付）か上書きか
+                if (checkBox_newfile.Checked) {
+                    cmd = "/cmd=update";
+                } else {
+                    cmd = "/cmd=force_copy";
+                }
+
+                if (checkBox_keepfolder.Checked) {
+                    // フォルダ構造をのままコピーする場合は、フォルダごとにFastCopyを実行
+                    using (SQLiteCommand sqlCmd = cn.CreateCommand()) {
+                        sqlCmd.CommandText = "SELECT path, file FROM flist WHERE checked = 1";
+                        using (SQLiteDataReader reader = sqlCmd.ExecuteReader()) {
+                            while (reader.Read()) {
+                                if (path == null) {
+                                    path = Path.GetDirectoryName(reader["path"].ToString());
+                                    writer = new StreamWriter(FastCopyTemp, false);
+                                }
+
+                                if (path == Path.GetDirectoryName(reader["path"].ToString())) {
+                                    writer.WriteLine(sourcePath.Text + reader["path"].ToString());
+                                    cnt++;
+                                } else {
+                                    writer.Close();
+                                    // FastCopy実行
+                                    fc = new System.Diagnostics.Process();
+                                    fc.StartInfo.FileName = FastCopyPath;
+                                    fc.StartInfo.Arguments = string.Format("{0} /no_ui /srcfile=\"{1}\" /to=\"{2}\"", cmd, FastCopyTemp, destPath.Text + path);
+                                    fc.Start();
+                                    fc.WaitForExit();
+                                    // カウント
+                                    processConter(cnt);
+                                    toolStripProgressBar1.Value = cnt;
+                                    Application.DoEvents();
+                                    // 次の準備
+                                    path = Path.GetDirectoryName(reader["path"].ToString());
+                                    writer = new StreamWriter(FastCopyTemp, false);
+                                    writer.WriteLine(sourcePath.Text + reader["path"].ToString());
+                                    cnt++;
+                                }
+                            }
+                            writer.Close();
+                            // 最後のFastCopy実行
+                            fc = new System.Diagnostics.Process();
+                            fc.StartInfo.FileName = FastCopyPath;
+                            fc.StartInfo.Arguments = string.Format("{0} /no_ui /srcfile=\"{1}\" /to=\"{2}\"", cmd, FastCopyTemp, destPath.Text + path);
+                            bool result = fc.Start();
+                            fc.WaitForExit();
+                            // カウント
+                            processConter(cnt);
+                            toolStripProgressBar1.Value = cnt;
+                            Application.DoEvents();
+                        }
+                    }
+                    processConter();
+                    toolStripProgressBar1.Value = 0;
+                    this.Cursor = preCursor;
+                    allButtons(true);
+                    buttonEnable();
+                    return cnt;
+
+                } else {
+
+                    // フォルダ構造を残さない場合は、一括でFastCopy実行
+                    using (writer = new StreamWriter(FastCopyTemp, false)) {
+                        using (SQLiteCommand sqlCmd = cn.CreateCommand()) {
+                            sqlCmd.CommandText = "SELECT path, file FROM flist WHERE checked = 1";
+                            using (SQLiteDataReader reader = sqlCmd.ExecuteReader()) {
+                                while (reader.Read()) {
+                                    writer.WriteLine(sourcePath.Text + reader["path"].ToString());
+                                    cnt++;
+                                }
+                            }
+                        }
+                    }
+
+                    fc = new System.Diagnostics.Process();
+                    fc.StartInfo.FileName = FastCopyPath;
+                    fc.StartInfo.Arguments = string.Format("{0} /no_ui /srcfile=\"{1}\" /to=\"{2}\"", cmd, FastCopyTemp, destPath.Text);
+                    fc.Start();
+                    fc.WaitForExit();
+                    // カウント
+                    processConter(cnt);
+                    toolStripProgressBar1.Value = cnt;
+                    Application.DoEvents();
+                    //
+                    processConter();
+                    toolStripProgressBar1.Value = 0;
+                    this.Cursor = preCursor;
+                    allButtons(true);
+                    buttonEnable();
+                    return cnt;
+                }
+            }
+
+            //
+            // FastCopyを使わないコピー
+            //
+            using (SQLiteCommand sqlCmd = cn.CreateCommand()) {
+                sqlCmd.CommandText = "SELECT path, file FROM flist WHERE checked = 1";
+                using (SQLiteDataReader reader = sqlCmd.ExecuteReader()) {
                     while (reader.Read()) {
                         // 入力ファイル名
                         inf = sourcePath.Text + "\\" + reader["path"].ToString();
@@ -224,8 +385,13 @@ namespace sift {
         private bool doCopy(string inf, string outf) {
 
             // フォルダが存在しない場合は作成する
-            if (!Directory.Exists(Path.GetDirectoryName(outf)))
-                Directory.CreateDirectory(System.IO.Path.GetDirectoryName(outf));
+            try {
+                if (!Directory.Exists(Path.GetDirectoryName(outf)))
+                    Directory.CreateDirectory(System.IO.Path.GetDirectoryName(outf));
+            } catch (Exception ex) {
+                MessageBox.Show(ex.Message);
+                return false;
+            }
 
             // コピー先に同盟ファイルがあるかチェック
             if (File.Exists(outf)) {
@@ -237,15 +403,25 @@ namespace sift {
                     if (checkBox_newfile.Checked) {
                         // sinがsoutより新しい場合は上書き
                         if (checkNewer(inf, outf)) {
-                            File.Delete(outf);
-                            File.Copy(inf, outf);
+                            try {
+                                File.Delete(outf);
+                                File.Copy(inf, outf);
+                            } catch (Exception ex) {
+                                MessageBox.Show(ex.Message);
+                                return false;
+                            }
                             return true;
                         } else
                             return false;
                     } else {
                         // 無条件に上書き
-                        File.Delete(outf);
-                        File.Copy(inf, outf);
+                        try {
+                            File.Delete(outf);
+                            File.Copy(inf, outf);
+                        } catch (Exception ex) {
+                            MessageBox.Show(ex.Message);
+                            return false;
+                        }
                         return true;
                     }
                 } else {
@@ -258,13 +434,23 @@ namespace sift {
                         n++;
                     }
                     outf = String.Format("{0}\\{1}({2}){3}", pathname, filename, n, extname);
-                    File.Copy(inf, outf);
+                    try {
+                        File.Copy(inf, outf);
+                    } catch (Exception ex) {
+                        MessageBox.Show(ex.Message);
+                        return false;
+                    }
                     return true;
                 }
             } else {
 
                 // コピー先には同名のファイルがない場合
-                File.Copy(inf, outf);
+                try {
+                    File.Copy(inf, outf);
+                } catch (Exception ex) {
+                    MessageBox.Show(ex.Message);
+                    return false;
+                }
                 return true;
             }
         }

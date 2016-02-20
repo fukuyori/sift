@@ -321,7 +321,6 @@ namespace sift {
         /// <param name="s"></param>
         private void selectAdd(String s) {
             allButtons(false);
-            checkBox1.Checked = false;
 
             // マウスカーソル変更
             Cursor preCursor = this.Cursor;
@@ -329,7 +328,7 @@ namespace sift {
 
             // ファイル名の取得
             fileAddQuery(tbQuery.Text);
-
+            checkBox1.Checked = false;
             // カーソルを元に戻す
             this.Cursor = preCursor;
 
@@ -374,15 +373,14 @@ namespace sift {
         /// <param name="s"></param>
         private void selectSub(String s) {
             allButtons(false);
-            checkBox1.Checked = false;
 
             // マウスカーソル変更
             Cursor preCursor = this.Cursor;
             this.Cursor = Cursors.WaitCursor;
-
             // ファイル名の取得
             fileSubQuery(tbQuery.Text);
 
+            checkBox1.Checked = false;
             // カーソルを元に戻す
             this.Cursor = preCursor;
 

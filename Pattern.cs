@@ -39,7 +39,7 @@ namespace sift {
             }
             listView1.Items.Add(string.Format("{0,6} = {1}", "<f>", Path.GetFileNameWithoutExtension(fileName)));
             listView1.Items.Add(string.Format("{0,6} = {1}", "<e>", Path.GetExtension(fileName)));
-            listView1.Items.Add(string.Format("{0,6} = {1}", "<n>", idx.ToString(fmt)));
+            listView1.Items.Add(string.Format("{0,6} = {1}", "<n>", (idx + 1).ToString(fmt)));
         }
     }
 }

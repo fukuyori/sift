@@ -45,6 +45,10 @@
             this.unsortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.copyAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyAllToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.openFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.targetDataGrid = new System.Windows.Forms.DataGridView();
             this.panel2ContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,7 +57,11 @@
             this.unsortToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyFullPathOfFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.openFileToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFolderToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.tbQuery = new System.Windows.Forms.TextBox();
             this.select = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
@@ -184,7 +192,11 @@
             this.refreshToolStripMenuItem,
             this.unsortToolStripMenuItem,
             this.toolStripSeparator3,
-            this.copyAllToolStripMenuItem});
+            this.copyAllToolStripMenuItem,
+            this.copyAllToolStripMenuItem2,
+            this.toolStripSeparator5,
+            this.openFileToolStripMenuItem,
+            this.openFolderToolStripMenuItem});
             this.panel1ContextMenu.Name = "contextMenuStrip2";
             this.toolTip1.SetToolTip(this.panel1ContextMenu, resources.GetString("panel1ContextMenu.ToolTip"));
             // 
@@ -228,6 +240,29 @@
             resources.ApplyResources(this.copyAllToolStripMenuItem, "copyAllToolStripMenuItem");
             this.copyAllToolStripMenuItem.Name = "copyAllToolStripMenuItem";
             this.copyAllToolStripMenuItem.Click += new System.EventHandler(this.copyAllToolStripMenuItem_Click);
+            // 
+            // copyAllToolStripMenuItem2
+            // 
+            resources.ApplyResources(this.copyAllToolStripMenuItem2, "copyAllToolStripMenuItem2");
+            this.copyAllToolStripMenuItem2.Name = "copyAllToolStripMenuItem2";
+            this.copyAllToolStripMenuItem2.Click += new System.EventHandler(this.copyAllToolStripMenuItem2_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            resources.ApplyResources(this.toolStripSeparator5, "toolStripSeparator5");
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            // 
+            // openFileToolStripMenuItem
+            // 
+            resources.ApplyResources(this.openFileToolStripMenuItem, "openFileToolStripMenuItem");
+            this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
+            this.openFileToolStripMenuItem.Click += new System.EventHandler(this.openFileToolStripMenuItem_Click);
+            // 
+            // openFolderToolStripMenuItem
+            // 
+            resources.ApplyResources(this.openFolderToolStripMenuItem, "openFolderToolStripMenuItem");
+            this.openFolderToolStripMenuItem.Name = "openFolderToolStripMenuItem";
+            this.openFolderToolStripMenuItem.Click += new System.EventHandler(this.openFolderToolStripMenuItem_Click);
             // 
             // targetDataGrid
             // 
@@ -281,7 +316,11 @@
             this.unsortToolStripMenuItem1,
             this.toolStripSeparator1,
             this.copyToolStripMenuItem,
-            this.pasteToolStripMenuItem});
+            this.copyFullPathOfFilesToolStripMenuItem,
+            this.pasteToolStripMenuItem,
+            this.toolStripSeparator6,
+            this.openFileToolStripMenuItem1,
+            this.openFolderToolStripMenuItem1});
             this.panel2ContextMenu.Name = "contextMenuStrip1";
             this.toolTip1.SetToolTip(this.panel2ContextMenu, resources.GetString("panel2ContextMenu.ToolTip"));
             // 
@@ -319,11 +358,34 @@
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
             this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
             // 
+            // copyFullPathOfFilesToolStripMenuItem
+            // 
+            resources.ApplyResources(this.copyFullPathOfFilesToolStripMenuItem, "copyFullPathOfFilesToolStripMenuItem");
+            this.copyFullPathOfFilesToolStripMenuItem.Name = "copyFullPathOfFilesToolStripMenuItem";
+            this.copyFullPathOfFilesToolStripMenuItem.Click += new System.EventHandler(this.copyFullPathOfFilesToolStripMenuItem_Click);
+            // 
             // pasteToolStripMenuItem
             // 
             resources.ApplyResources(this.pasteToolStripMenuItem, "pasteToolStripMenuItem");
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
             this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            resources.ApplyResources(this.toolStripSeparator6, "toolStripSeparator6");
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            // 
+            // openFileToolStripMenuItem1
+            // 
+            resources.ApplyResources(this.openFileToolStripMenuItem1, "openFileToolStripMenuItem1");
+            this.openFileToolStripMenuItem1.Name = "openFileToolStripMenuItem1";
+            this.openFileToolStripMenuItem1.Click += new System.EventHandler(this.openFileToolStripMenuItem1_Click);
+            // 
+            // openFolderToolStripMenuItem1
+            // 
+            resources.ApplyResources(this.openFolderToolStripMenuItem1, "openFolderToolStripMenuItem1");
+            this.openFolderToolStripMenuItem1.Name = "openFolderToolStripMenuItem1";
+            this.openFolderToolStripMenuItem1.Click += new System.EventHandler(this.openFolderToolStripMenuItem1_Click);
             // 
             // tbQuery
             // 
@@ -760,6 +822,14 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.destFolderSelect);
             // 
+            // toolTip1
+            // 
+            this.toolTip1.AutomaticDelay = 0;
+            this.toolTip1.AutoPopDelay = 800000;
+            this.toolTip1.InitialDelay = 480;
+            this.toolTip1.IsBalloon = true;
+            this.toolTip1.ReshowDelay = 96;
+            // 
             // sift
             // 
             resources.ApplyResources(this, "$this");
@@ -872,6 +942,14 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem showPatternToolStripMenuItem;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openFolderToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem openFolderToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem copyAllToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem copyFullPathOfFilesToolStripMenuItem;
     }
 }
 

@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using System.IO;
 using System.Data.SQLite;
+using System.Diagnostics;
 
 namespace sift {
     public partial class sift : Form {
@@ -55,6 +56,19 @@ namespace sift {
                 Clipboard.SetText(s.ToString());
         }
 
+        private void copyFullPathOfFilesToolStripMenuItem_Click(object sender, EventArgs e) {
+            targetFullPathCopyToClipboard();
+        }
+
+        private void targetFullPathCopyToClipboard() {
+            System.Text.StringBuilder s = new System.Text.StringBuilder();
+            for (int i = 0; i < targetDataGrid.Rows.Count; i++) {
+                s.Append(sourcePath.Text + targetDataGrid.Rows[i].Cells["path"].Value.ToString() + Environment.NewLine);
+            }
+            if (s.Length > 0)
+                Clipboard.SetText(s.ToString());
+        }
+
         /// <summary>
         /// コンテキストメニュー targetDataGridから選択されたファイルを消す
         /// </summary>
@@ -84,6 +98,40 @@ namespace sift {
                 pos = targetDataGrid.Rows.Count - 1;
             if (pos > 0)
                 targetDataGrid.FirstDisplayedScrollingRowIndex = pos;
+        }
+
+        /// <summary>
+        /// コンテキストメニュー　ファイルを開く
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void openFileToolStripMenuItem1_Click(object sender, EventArgs e) {
+            String name;
+
+            if (targetDataGrid.SelectedCells.Count > 0) {
+
+                DataGridViewCell cell = targetDataGrid.SelectedCells[0];
+                name = sourcePath.Text + targetDataGrid.Rows[cell.RowIndex].Cells["path"].Value.ToString();
+                Process p = Process.Start(name);
+            }
+        }
+
+        /// <summary>
+        /// コンテキストメニュー　フォルダを開く
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void openFolderToolStripMenuItem1_Click(object sender, EventArgs e) {
+            String name;
+
+            if (targetDataGrid.SelectedCells.Count > 0) {
+
+                DataGridViewCell cell = targetDataGrid.SelectedCells[0];
+                name = sourcePath.Text + targetDataGrid.Rows[cell.RowIndex].Cells["path"].Value.ToString();
+                //オプションに"/select"を指定して開く
+                System.Diagnostics.Process.Start(
+                    "EXPLORER.EXE", "/select,\"" + name + "\"");
+            }
         }
 
         /// <summary>

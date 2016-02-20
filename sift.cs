@@ -4,6 +4,8 @@ using System.Windows.Forms;
 using System.Data.SQLite;
 using System.Threading;
 using System.Globalization;
+using System.IO;
+using System.Diagnostics;
 
 namespace sift {
     public partial class sift : Form {
@@ -36,18 +38,14 @@ namespace sift {
         private string currentSourcePath = "";
         private int totalCount = 0; // データベースのレコード数
 
+        // FastCopy
+        private string FastCopyPath = "";
+        private Boolean FastCopyStructureIgnore = false;
+
         /// <summary>
         /// 初期化
         /// </summary>
         public sift() {
-            //二重起動をチェックする
-            if (System.Diagnostics.Process.GetProcessesByName(
-                System.Diagnostics.Process.GetCurrentProcess().ProcessName).Length > 1) {
-                //すでに起動していると判断する
-                MessageBox.Show(Properties.Resources.messagebox4);
-                this.Close();
-            }
-
             InitializeComponent();
         }
 
@@ -60,21 +58,29 @@ namespace sift {
             // ボタン設定
             btnToScr2Frm1.Enabled = false;
             btnToScr3.Enabled = false;
-            btnStart.Enabled = false;
 
             // パネル設定
             panel1.Dock = DockStyle.Fill;
             panel2.Dock = DockStyle.Fill;
             panel3.Dock = DockStyle.Fill;
+            panel4.Dock = DockStyle.Top;
             viewPanel(1);
-            this.Width = 560;
+            this.Height = 800;
+            this.Width = 600;
 
             checkedCounter(totalCount);
 
             // DB作成
             dataPath = System.IO.Path.GetTempPath() + @"\sift.db";
-            if (System.IO.File.Exists(dataPath))
+            // ＤＢファイル使用中の場合は、多重起動のメッセージを出して終了
+            if (System.IO.File.Exists(dataPath)) {
+                if (IsFileLocked(dataPath)) {
+                    MessageBox.Show(Properties.Resources.messagebox4);
+                    this.Close();
+                    return;
+                }
                 System.IO.File.Delete(dataPath);
+            }
             dbc = "Data Source=" + dataPath;
             cn = new SQLiteConnection(dbc);
             cn.Open();
@@ -209,52 +215,55 @@ namespace sift {
 
             regkey = Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Sift");
             // 履歴保存数をレジストリから取得
-            if (regkey.GetValue("HistoryCount", null) != null)
-                MAXCOMPSTR = (int)regkey.GetValue("HistoryCount", 20);
-            else
-                regkey.SetValue("HistoryCount", MAXCOMPSTR);
+            MAXCOMPSTR = (int)regkey.GetValue("HistoryCount", MAXCOMPSTR);
             // 最大取扱ファイル数をレジストリから取得
-            if (regkey.GetValue("FileCount", null) != null)
-                MAXFILECOUNT = (int)regkey.GetValue("FileCount", 10000);
-            else
-                regkey.SetValue("FileCount", MAXFILECOUNT);
+            MAXFILECOUNT = (int)regkey.GetValue("FileCount", MAXFILECOUNT);
             // 検索範囲 0:Top Folder 1:サブフォルダーも含む
-            if (regkey.GetValue("SearchOption", null) != null) {
-                if ((int)regkey.GetValue("SearchOption", 0) == 0) {
-                    radioButton1.Checked = true;
-                    radioButton2.Checked = false;
-                } else {
-                    radioButton1.Checked = false;
-                    radioButton2.Checked = true;
-                }
-            } else
-                regkey.SetValue("SearchOption", radioButton1.Checked ? 0 : 1);
+            if ((int)regkey.GetValue("SearchOption", 0) == 1) {
+                radioButton1.Checked = false;
+                radioButton2.Checked = true;
+            }
             // フォルダー構成のままコピー
-            if (regkey.GetValue("KeepFolder", null) != null)
-                if ((int)regkey.GetValue("KeepFolder", 0) == 0)
-                    checkBox_keepfolder.Checked = false;
-                else
-                    checkBox_keepfolder.Checked = true;
-            else
-                regkey.SetValue("KeepFolder", checkBox_keepfolder.Checked ? 1 : 0);
+            if ((int)regkey.GetValue("KeepFolder", 0) == 1)
+                checkBox_keepfolder.Checked = true;
             // 上書き
-            if (regkey.GetValue("Overwrite", null) != null)
-                if ((int)regkey.GetValue("Overwrite", 0) == 0)
-                    checkBox_overwrite.Checked = false;
-                else
-                    checkBox_overwrite.Checked = true;
-            else
-                regkey.SetValue("Overwrite", checkBox_overwrite.Checked ? 1 : 0);
+            if ((int)regkey.GetValue("Overwrite", 0) == 1) {
+                checkBox_overwrite.Checked = true;
+            } else {
+                checkBox_newfile.Enabled = false;
+            }
             // 最新で上書き
-            if (regkey.GetValue("NewFile", null) != null)
-                if ((int)regkey.GetValue("NewFile", 0) == 0)
-                    checkBox_newfile.Checked = false;
-                else
-                    checkBox_newfile.Checked = true;
-            else
-                regkey.SetValue("NewFile", checkBox_newfile.Checked ? 1 : 0);
+            if ((int)regkey.GetValue("NewFile", 0) == 1)
+                checkBox_newfile.Checked = true;
+            // FastCopy
+            if ((string)regkey.GetValue("FastCopy", "") != "")
+                FastCopyPath = (string)regkey.GetValue("FastCopy", "");
+            // FastCopy ignore mode
+            if ((int)regkey.GetValue("FastCopy_Structure_Ignore", 0) == 1)
+                FastCopyStructureIgnore = true;
 
             this.sourcePath.Focus();
+        }
+
+        /// <summary>
+        /// ファイルの使用中をチェック
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private bool IsFileLocked(string path) {
+            FileStream stream = null;
+
+            try {
+                stream = new FileStream(path, FileMode.Open, FileAccess.ReadWrite, FileShare.None);
+            } catch {
+                return true;
+            } finally {
+                if (stream != null) {
+                    stream.Close();
+                }
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -284,14 +293,15 @@ namespace sift {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
+
             //// フォルダパスをレジストリに登録
             Microsoft.Win32.RegistryKey regkey =
                 Microsoft.Win32.Registry.CurrentUser.CreateSubKey(@"Software\Sift\History");
 
             for (int i = 0; i < MAXCOMPSTR; i++) {
-                if (sourceCompList.Count > i)
+                if (sourceCompList != null && sourceCompList.Count > i)
                     regkey.SetValue("source" + i, sourceCompList[i].ToString());
-                if (destCompList.Count > i)
+                if (destCompList != null && destCompList.Count > i)
                     regkey.SetValue("dest" + i, destCompList[i].ToString());
             }
             // 設定をレジストリに保存
@@ -303,14 +313,12 @@ namespace sift {
             regkey.SetValue("KeepFolder", checkBox_keepfolder.Checked ? 1 : 0);
             regkey.SetValue("Overwrite", checkBox_overwrite.Checked ? 1 : 0);
             regkey.SetValue("NewFile", checkBox_newfile.Checked ? 1 : 0);
+            regkey.SetValue("FastCopy", FastCopyPath);
+            regkey.SetValue("FastCopy_Structure_Ignore", FastCopyStructureIgnore ? 1 : 0);
 
-            // DB削除
             dbDelete("flist");
             cn.Close();
-            System.Threading.Thread.Sleep(1000);
-            try {
-                System.IO.File.Delete(dataPath);
-            } catch { }
+            cn.Dispose();
         }
 
         /// <summary>
@@ -355,7 +363,6 @@ namespace sift {
             }
             fbd.Dispose();
             this.destPath.Focus();
-            buttonEnable();
         }
 
         /// <summary>
@@ -420,7 +427,7 @@ namespace sift {
                 addDestFolder(fbd.SelectedPath);
             }
             fbd.Dispose();
-            buttonEnable();
+            sourcePath.Focus();
         }
 
         /// <summary>
@@ -597,14 +604,6 @@ namespace sift {
         /// ボタン選択表示
         /// </summary>
         private void buttonEnable() {
-            // 共通
-            if ((sourcePath.Text.Length > 0)
-                && (destPath.Text.Length > 0)
-                && (!sourcePath.Text.Equals(destPath.Text)))
-                btnStart.Enabled = true;
-            else
-                btnStart.Enabled = false;
-
             // パネル１
             if (sourceDataGrid.Rows.Count > 0)
                 btnToScr2Frm1.Enabled = true;
@@ -625,17 +624,17 @@ namespace sift {
         /// <param name="e"></param>
         private void btnStart_Click(object sender, EventArgs e) {
             int cnt = 0;
-
             adapter.Update(dtSource);
 
-            if (panel1.Visible.Equals(true))
-                cnt = copyScr1();
-            if (panel2.Visible.Equals(true))
-                cnt = copyScr2();
-            if (panel3.Visible.Equals(true))
-                cnt = copyScr3();
-
-            MessageBox.Show(string.Format(Properties.Resources.messagebox1, cnt), "Information", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            if (sourcePath.Text.Length > 0 && destPath.Text.Length > 0 && !sourcePath.Text.Equals(destPath.Text)) {
+                if (panel1.Visible.Equals(true))
+                    cnt = copyScr1();
+                if (panel2.Visible.Equals(true))
+                    cnt = copyScr2();
+                if (panel3.Visible.Equals(true))
+                    cnt = copyScr3();
+                MessageBox.Show(string.Format(Properties.Resources.messagebox1, cnt), "Information", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            }
         }
 
         /// <summary>
@@ -695,12 +694,16 @@ namespace sift {
             Configure prop = new Configure();
             prop.maxCompStr = MAXCOMPSTR;
             prop.maxFileCount = MAXFILECOUNT;
+            prop.fastcopy = FastCopyPath;
+            prop.fastcopyStructureIgnore = FastCopyStructureIgnore;
 
             prop.ShowDialog();
             MAXCOMPSTR = prop.maxCompStr;
             renumSourceFolder();
             renumDestFolder();
             MAXFILECOUNT = prop.maxFileCount;
+            FastCopyPath = prop.fastcopy;
+            FastCopyStructureIgnore = prop.fastcopyStructureIgnore;
 
             if (prop.HistoryClear) {
                 regClear();
