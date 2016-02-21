@@ -181,6 +181,7 @@
             this.sourceDataGrid.RowTemplate.Height = 21;
             this.toolTip1.SetToolTip(this.sourceDataGrid, resources.GetString("sourceDataGrid.ToolTip"));
             this.sourceDataGrid.CurrentCellChanged += new System.EventHandler(this.sourceDataGrid_CurrentCellChanged);
+            this.sourceDataGrid.KeyDown += new System.Windows.Forms.KeyEventHandler(this.sourceDataGrid_KeyDown);
             // 
             // panel1ContextMenu
             // 

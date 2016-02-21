@@ -137,6 +137,10 @@ namespace sift {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void markToolStripMenuItem_Click(object sender, EventArgs e) {
+            markList();
+        }
+
+        private void markList() {
             String sId; // 選択されたデータのID
 
             using (var transaction = cn.BeginTransaction()) {
@@ -162,6 +166,10 @@ namespace sift {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void unmarkToolStripMenuItem_Click(object sender, EventArgs e) {
+            unmark();
+        }
+
+        private void unmark() {
             String sId; // 選択されたデータのID
 
             using (var transaction = cn.BeginTransaction()) {
@@ -187,6 +195,10 @@ namespace sift {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void openFileToolStripMenuItem_Click(object sender, EventArgs s) {
+            p1OpenFile();
+        }
+
+        private void p1OpenFile() {
             String name;
 
             if (sourceDataGrid.SelectedCells.Count > 0) {
@@ -203,6 +215,10 @@ namespace sift {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void openFolderToolStripMenuItem_Click(object sender, EventArgs e) {
+            p1OpenFolder();
+        }
+
+        private void p1OpenFolder() {
             String name;
 
             if (sourceDataGrid.SelectedCells.Count > 0) {
@@ -223,6 +239,10 @@ namespace sift {
         /// <returns></returns>
         // /////////////////////////////////////////////////////////
         private int copyScr1() {
+            return copyProc();
+        }
+
+        private int copyProc() {
             string inf, outf;
             string cmd = "";
             string path = null;
@@ -245,7 +265,7 @@ namespace sift {
             //
             // FastCopyを使用する
             //
-            if (FastCopyPath != "" && checkBox_overwrite.Checked && 
+            if (FastCopyPath != "" && checkBox_overwrite.Checked &&
                 (!checkBox_keepfolder.Checked ||
                 (checkBox_keepfolder.Checked && !FastCopyStructureIgnore))) {
 
@@ -374,6 +394,7 @@ namespace sift {
             allButtons(true);
             buttonEnable();
             return cnt;
+
         }
 
         /// <summary>
@@ -452,6 +473,31 @@ namespace sift {
                     return false;
                 }
                 return true;
+            }
+        }
+
+        /// <summary>
+        /// ショートカットキー
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void sourceDataGrid_KeyDown(object sender, KeyEventArgs e) {
+            switch (e.KeyData) {
+                case Keys.M:
+                    markList();
+                    break;
+                case Keys.U:
+                    unmark();
+                    break;
+                case Keys.O:
+                    p1OpenFile();
+                    break;
+                case Keys.I:
+                    p1OpenFolder();
+                    break;
+                case Keys.S:
+                    dtSource.DefaultView.Sort = string.Empty;
+                    break;
             }
         }
 

@@ -75,8 +75,13 @@ namespace sift {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void removeToolStripMenuItem_Click(object sender, EventArgs e) {
+            p2Remove();
+        }
+
+        private void p2Remove() {
             String sId; // 選択されたデータのID
             int pos = targetDataGrid.FirstDisplayedScrollingRowIndex;
+            int cur = 0;
 
             using (var transaction = cn.BeginTransaction()) {
                 using (SQLiteCommand cmd = cn.CreateCommand()) {
@@ -85,6 +90,7 @@ namespace sift {
 
                     foreach (DataGridViewCell cell in targetDataGrid.SelectedCells) {
                         sId = targetDataGrid.Rows[cell.RowIndex].Cells["Id"].Value.ToString();
+                        cur = cell.RowIndex;
                         // sourceDataGridのチェックも外す
                         dbCheck(int.Parse(sId), 0);
                     }
@@ -94,10 +100,15 @@ namespace sift {
             adapter.Fill(dtSource);
             checkBox1.Checked = false;
             targetRefresh();
-            if (pos > targetDataGrid.Rows.Count)
+
+            if (pos >= targetDataGrid.Rows.Count)
                 pos = targetDataGrid.Rows.Count - 1;
-            if (pos > 0)
+            if (pos >= 0)
                 targetDataGrid.FirstDisplayedScrollingRowIndex = pos;
+            if (cur >= targetDataGrid.Rows.Count)
+                cur = targetDataGrid.Rows.Count - 1;
+            if (cur >= 0)
+                targetDataGrid.Rows[cur].Selected = true;
         }
 
         /// <summary>
@@ -106,6 +117,10 @@ namespace sift {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void openFileToolStripMenuItem1_Click(object sender, EventArgs e) {
+            p2OpenFile();
+        }
+
+        private void p2OpenFile() {
             String name;
 
             if (targetDataGrid.SelectedCells.Count > 0) {
@@ -122,6 +137,10 @@ namespace sift {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void openFolderToolStripMenuItem1_Click(object sender, EventArgs e) {
+            p2OpenFolder();
+        }
+
+        private void p2OpenFolder() {
             String name;
 
             if (targetDataGrid.SelectedCells.Count > 0) {
@@ -257,48 +276,7 @@ namespace sift {
         /// <returns></returns>
         // ////////////////////////////////////////////////////////////////
         private int copyScr2() {
-            String inf, outf;
-            int cnt = 0;
-
-            allButtons(false);
-
-            // マウスカーソル変更
-            Cursor preCursor = this.Cursor;
-            this.Cursor = Cursors.WaitCursor;
-
-            // プログレスバー設定
-            toolStripProgressBar1.Minimum = 0;
-            toolStripProgressBar1.Maximum = dbCount(true);
-            toolStripProgressBar1.Value = 0;
-
-            using (SQLiteCommand cmd = cn.CreateCommand()) {
-                cmd.CommandText = "SELECT path, file FROM flist WHERE checked = 1";
-                using (SQLiteDataReader reader = cmd.ExecuteReader()) {
-                    while (reader.Read()) {
-                        // 入力ファイル名
-                        inf = sourcePath.Text + "\\" + reader["path"].ToString();
-                        // 出力ファイル名
-                        if (checkBox_keepfolder.Checked)
-                            outf = destPath.Text + "\\" + reader["path"].ToString();
-                        else
-                            outf = destPath.Text + "\\" + reader["file"].ToString();
-
-                        // コピー実行
-                        if (doCopy(inf, outf)) {
-                            cnt++;
-                            processConter(cnt);
-                            toolStripProgressBar1.Value = cnt;
-                            Application.DoEvents();
-                        }
-                    }
-                }
-            }
-            processConter();
-            toolStripProgressBar1.Value = 0;
-            this.Cursor = preCursor;
-            allButtons(true);
-            buttonEnable();
-            return cnt;
+            return copyProc();
         }
 
         /// <summary>
@@ -309,6 +287,20 @@ namespace sift {
         private void targetDataGrid_KeyDown(object sender, KeyEventArgs e) {
             if (e.KeyData == (Keys.Control | Keys.V)) {
                 targetFileNamePasteFromClipboard();
+            }
+            switch (e.KeyData) {
+                case Keys.R:
+                    p2Remove();
+                    break;
+                case Keys.O:
+                    p2OpenFile();
+                    break;
+                case Keys.I:
+                    p2OpenFolder();
+                    break;
+                case Keys.S:
+                    dtTarget.DefaultView.Sort = string.Empty;
+                    break;
             }
         }
 

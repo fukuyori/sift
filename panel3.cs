@@ -231,29 +231,53 @@ namespace sift {
                 // 入力ファイル名
                 inf = sourcePath.Text + "\\" + targetDataGrid.Rows[i].Cells["path"].Value.ToString();
 
-                // 出力ファイル名
-                if (checkBox_keepfolder.Checked)
-                    outf = destPath.Text + "\\" + renameDataGrid.Rows[i].Cells["path"].Value.ToString();
-                else
-                    outf = destPath.Text + "\\" + renameDataGrid.Rows[i].Cells["file"].Value.ToString();
 
-
-                // コピー実行
-                if (doCopy(inf, outf)) {
-                    cnt++;
-                    processConter(cnt);
-                    toolStripProgressBar1.Value = cnt;
-                    Application.DoEvents();
-
+                if (destPath.Text.Length > 0) {
+                    // 出力ファイル名
+                    if (checkBox_keepfolder.Checked)
+                        outf = destPath.Text + "\\" + renameDataGrid.Rows[i].Cells["path"].Value.ToString();
+                    else
+                        outf = destPath.Text + "\\" + renameDataGrid.Rows[i].Cells["file"].Value.ToString();
+                    // コピー実行
+                    if (doCopy(inf, outf))
+                        cnt++;
+                    else
+                        break;
+                } else {
+                    // 出力ファイル名
+                    outf = sourcePath.Text + "\\" + renameDataGrid.Rows[i].Cells["path"].Value.ToString();
+                    // ファイル名変更
+                    if (doMove(inf, outf))
+                        cnt++;
+                    else
+                        break;
                 }
+
+                processConter(cnt);
+                toolStripProgressBar1.Value = cnt;
+                Application.DoEvents();
             }
+
             processConter();
             toolStripProgressBar1.Value = 0;
+
+            if (destPath.Text.Length == 0) 
+                sourceRefresh(sourcePath.Text);
+
             this.Cursor = preCursor;
             allButtons(true);
             buttonEnable();
             return cnt;
+        }
 
+        private Boolean doMove(string inf, string outf) {
+            try {
+                File.Move(inf, outf);
+            } catch (Exception ex) {
+                MessageBox.Show(ex.Message);
+                return false;
+            }
+            return true;
         }
 
         /// <summary>

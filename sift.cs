@@ -626,15 +626,18 @@ namespace sift {
             int cnt = 0;
             adapter.Update(dtSource);
 
-            if (sourcePath.Text.Length > 0 && destPath.Text.Length > 0 && !sourcePath.Text.Equals(destPath.Text)) {
-                if (panel1.Visible.Equals(true))
+            if (panel1.Visible.Equals(true))
+                if (sourcePath.Text.Length > 0 && destPath.Text.Length > 0 && !sourcePath.Text.Equals(destPath.Text))
                     cnt = copyScr1();
-                if (panel2.Visible.Equals(true))
+            if (panel2.Visible.Equals(true))
+                if (sourcePath.Text.Length > 0 && destPath.Text.Length > 0 && !sourcePath.Text.Equals(destPath.Text))
                     cnt = copyScr2();
-                if (panel3.Visible.Equals(true))
+            if (panel3.Visible.Equals(true))
+                if (sourcePath.Text.Length > 0 && !sourcePath.Text.Equals(destPath.Text))
                     cnt = copyScr3();
+
+            if (cnt > 0)
                 MessageBox.Show(string.Format(Properties.Resources.messagebox1, cnt), "Information", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-            }
         }
 
         /// <summary>

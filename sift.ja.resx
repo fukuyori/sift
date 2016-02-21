@@ -131,9 +131,6 @@
   <data name="source.Text" xml:space="preserve">
     <value>コピー元</value>
   </data>
-  <data name="source.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="target.Font" type="System.Drawing.Font, System.Drawing">
     <value>MS UI Gothic, 8.25pt</value>
   </data>
@@ -146,146 +143,131 @@
   <data name="target.Text" xml:space="preserve">
     <value>コピー先</value>
   </data>
-  <data name="target.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="markToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>183, 22</value>
   </data>
   <data name="markToolStripMenuItem.Text" xml:space="preserve">
-    <value>選択</value>
+    <value>選択 (&amp;M)</value>
   </data>
   <data name="unmarkToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>183, 22</value>
   </data>
   <data name="unmarkToolStripMenuItem.Text" xml:space="preserve">
-    <value>選択解除</value>
+    <value>選択解除 (&amp;U)</value>
   </data>
   <data name="clearAllToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>183, 22</value>
   </data>
   <data name="clearAllToolStripMenuItem2.Text" xml:space="preserve">
     <value>全解除</value>
   </data>
   <data name="refreshToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>183, 22</value>
   </data>
   <data name="refreshToolStripMenuItem.Text" xml:space="preserve">
-    <value>再表示</value>
+    <value>再表示 (&amp;E)</value>
   </data>
   <data name="unsortToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>183, 22</value>
   </data>
   <data name="unsortToolStripMenuItem.Text" xml:space="preserve">
-    <value>ソート解除</value>
+    <value>ソート解除 (&amp;S)</value>
   </data>
   <data name="toolStripSeparator3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>166, 6</value>
+    <value>180, 6</value>
   </data>
   <data name="copyAllToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>183, 22</value>
   </data>
   <data name="copyAllToolStripMenuItem.Text" xml:space="preserve">
-    <value>全ファイル名コピー</value>
+    <value>全ファイル名コピー (&amp;C)</value>
   </data>
   <data name="copyAllToolStripMenuItem2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>183, 22</value>
   </data>
   <data name="copyAllToolStripMenuItem2.Text" xml:space="preserve">
-    <value>完全なパスをコピー</value>
+    <value>完全なパスをコピー (&amp;P)</value>
   </data>
   <data name="toolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
-    <value>166, 6</value>
+    <value>180, 6</value>
   </data>
   <data name="openFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>183, 22</value>
   </data>
   <data name="openFileToolStripMenuItem.Text" xml:space="preserve">
-    <value>開く</value>
+    <value>開く (&amp;O)</value>
   </data>
   <data name="openFolderToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>183, 22</value>
   </data>
   <data name="openFolderToolStripMenuItem.Text" xml:space="preserve">
-    <value>ファイルの場所を開く</value>
+    <value>ファイルの場所を開く (&amp;I)</value>
   </data>
   <data name="panel1ContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>170, 214</value>
-  </data>
-  <data name="panel1ContextMenu.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="sourceDataGrid.ToolTip" xml:space="preserve">
-    <value />
+    <value>184, 214</value>
   </data>
   <data name="removeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>183, 22</value>
   </data>
   <data name="removeToolStripMenuItem.Text" xml:space="preserve">
-    <value>選択削除</value>
+    <value>選択削除 (&amp;R)</value>
   </data>
   <data name="clearAllToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>183, 22</value>
   </data>
   <data name="clearAllToolStripMenuItem.Text" xml:space="preserve">
     <value>全削除</value>
   </data>
   <data name="refreshFileNamesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>183, 22</value>
   </data>
   <data name="refreshFileNamesToolStripMenuItem.Text" xml:space="preserve">
-    <value>再表示</value>
+    <value>再表示 (&amp;E)</value>
   </data>
   <data name="unsortToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>183, 22</value>
   </data>
   <data name="unsortToolStripMenuItem1.Text" xml:space="preserve">
-    <value>ソート解除</value>
+    <value>ソート解除 (&amp;S)</value>
   </data>
   <data name="toolStripSeparator1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>166, 6</value>
+    <value>180, 6</value>
   </data>
   <data name="copyToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>183, 22</value>
   </data>
   <data name="copyToolStripMenuItem.Text" xml:space="preserve">
-    <value>全ファイル名コピー</value>
+    <value>全ファイル名コピー (&amp;C)</value>
   </data>
   <data name="copyFullPathOfFilesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>183, 22</value>
   </data>
   <data name="copyFullPathOfFilesToolStripMenuItem.Text" xml:space="preserve">
-    <value>完全なパスをコピー</value>
+    <value>完全なパスをコピー (&amp;P)</value>
   </data>
   <data name="pasteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>183, 22</value>
   </data>
   <data name="pasteToolStripMenuItem.Text" xml:space="preserve">
-    <value>ファイル名貼り付け</value>
+    <value>ファイル名貼り付け (&amp;V)</value>
   </data>
   <data name="toolStripSeparator6.Size" type="System.Drawing.Size, System.Drawing">
-    <value>166, 6</value>
+    <value>180, 6</value>
   </data>
   <data name="openFileToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>183, 22</value>
   </data>
   <data name="openFileToolStripMenuItem1.Text" xml:space="preserve">
-    <value>開く</value>
+    <value>開く (&amp;O)</value>
   </data>
   <data name="openFolderToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>169, 22</value>
+    <value>183, 22</value>
   </data>
   <data name="openFolderToolStripMenuItem1.Text" xml:space="preserve">
-    <value>ファイルの場所を開く</value>
+    <value>ファイルの場所を開く (&amp;I)</value>
   </data>
   <data name="panel2ContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>170, 214</value>
-  </data>
-  <data name="panel2ContextMenu.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="targetDataGrid.ToolTip" xml:space="preserve">
-    <value />
+    <value>184, 214</value>
   </data>
   <data name="tbQuery.ToolTip" xml:space="preserve">
     <value>%(パーセント)と_(アンダースコアー)の２種類の
@@ -304,9 +286,6 @@
   <data name="select.Text" xml:space="preserve">
     <value>検索</value>
   </data>
-  <data name="select.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="button3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -314,52 +293,43 @@
     <value>条件に一致するファイルを追加</value>
   </data>
   <data name="removeToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>160, 22</value>
+    <value>178, 22</value>
   </data>
   <data name="removeToolStripMenuItem1.Text" xml:space="preserve">
-    <value>選択削除</value>
+    <value>選択削除 (&amp;R)</value>
   </data>
   <data name="refreshToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>160, 22</value>
+    <value>178, 22</value>
   </data>
   <data name="refreshToolStripMenuItem1.Text" xml:space="preserve">
-    <value>再表示</value>
+    <value>再表示 (&amp;E)</value>
   </data>
   <data name="toolStripSeparator2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 6</value>
+    <value>175, 6</value>
   </data>
   <data name="copyAllToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>160, 22</value>
+    <value>178, 22</value>
   </data>
   <data name="copyAllToolStripMenuItem1.Text" xml:space="preserve">
-    <value>全ファイル名コピー</value>
+    <value>全ファイル名コピー (&amp;C)</value>
   </data>
   <data name="pasteToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>160, 22</value>
+    <value>178, 22</value>
   </data>
   <data name="pasteToolStripMenuItem1.Text" xml:space="preserve">
-    <value>ファイル名貼り付け</value>
+    <value>ファイル名貼り付け (&amp;V)</value>
   </data>
   <data name="toolStripSeparator4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>157, 6</value>
+    <value>175, 6</value>
   </data>
   <data name="showPatternToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>160, 22</value>
+    <value>178, 22</value>
   </data>
   <data name="showPatternToolStripMenuItem.Text" xml:space="preserve">
-    <value>パターン表示</value>
+    <value>パターン表示 (&amp;S)</value>
   </data>
   <data name="panel3ContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>161, 126</value>
-  </data>
-  <data name="panel3ContextMenu.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="renameDataGrid.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="statusStrip1.ToolTip" xml:space="preserve">
-    <value />
+    <value>179, 126</value>
   </data>
   <data name="propertiesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>113, 22</value>
@@ -391,9 +361,6 @@
   <data name="helpToolStripMenuItem.Text" xml:space="preserve">
     <value>ヘルプ(&amp;H)</value>
   </data>
-  <data name="menuStrip1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="button4.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -412,17 +379,8 @@
   <data name="label1.Text" xml:space="preserve">
     <value>コピーファイル選択</value>
   </data>
-  <data name="label1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="checkBox1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
-  </data>
-  <data name="checkBox1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="panel1.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="btnToScr3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -442,12 +400,6 @@
   <data name="label2.Text" xml:space="preserve">
     <value>コピー対象ファイル</value>
   </data>
-  <data name="label2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="panel2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="label4.Font" type="System.Drawing.Font, System.Drawing">
     <value>MS UI Gothic, 8.25pt</value>
   </data>
@@ -459,9 +411,6 @@
   </data>
   <data name="label4.Text" xml:space="preserve">
     <value>変換形式</value>
-  </data>
-  <data name="label4.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="tbFormat.Location" type="System.Drawing.Point, System.Drawing">
     <value>58, 145</value>
@@ -491,12 +440,6 @@
   <data name="label3.Text" xml:space="preserve">
     <value>ファイル名変更</value>
   </data>
-  <data name="label3.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="panel3.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="checkBox_newfile.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -505,9 +448,6 @@
   </data>
   <data name="checkBox_newfile.Text" xml:space="preserve">
     <value>最新ファイルを残す</value>
-  </data>
-  <data name="checkBox_newfile.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="checkBox_keepfolder.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -518,9 +458,6 @@
   <data name="checkBox_keepfolder.Text" xml:space="preserve">
     <value>ディレクトリ構造のまま</value>
   </data>
-  <data name="checkBox_keepfolder.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="checkBox_overwrite.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -530,14 +467,8 @@
   <data name="checkBox_overwrite.Text" xml:space="preserve">
     <value>上書き</value>
   </data>
-  <data name="checkBox_overwrite.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="groupBox2.Text" xml:space="preserve">
     <value>書き込みオプション</value>
-  </data>
-  <data name="groupBox2.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="radioButton2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -548,9 +479,6 @@
   <data name="radioButton2.Text" xml:space="preserve">
     <value>すべてのサブフォルダー</value>
   </data>
-  <data name="radioButton2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="radioButton1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -560,20 +488,8 @@
   <data name="radioButton1.Text" xml:space="preserve">
     <value>現在のフォルダー</value>
   </data>
-  <data name="radioButton1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
   <data name="groupBox1.Text" xml:space="preserve">
     <value>検索オプション</value>
-  </data>
-  <data name="groupBox1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="destPath.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="sourcePath.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="button1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
@@ -592,9 +508,6 @@
   </data>
   <data name="button2.ToolTip" xml:space="preserve">
     <value>コピー先フォルダー選択</value>
-  </data>
-  <data name="panel4.ToolTip" xml:space="preserve">
-    <value />
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -5792,8 +5705,5 @@
         AGMA4wAFAAAAAPAB///AAf//wAH//4AB//+AAf//gAH//4AB//+AAf//gAH//4AB//+AAf//gAD//4AB
         ///AAf//4AH///AB//8=
 </value>
-  </data>
-  <data name="$this.ToolTip" xml:space="preserve">
-    <value />
   </data>
 </root>
