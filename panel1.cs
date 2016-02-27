@@ -194,20 +194,20 @@ namespace sift {
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void openFileToolStripMenuItem_Click(object sender, EventArgs s) {
-            p1OpenFile();
-        }
+        //private void openFileToolStripMenuItem_Click(object sender, EventArgs s) {
+        //    p1OpenFile();
+        //}
 
-        private void p1OpenFile() {
-            String name;
+        //private void p1OpenFile() {
+        //    String name;
 
-            if (sourceDataGrid.SelectedCells.Count > 0) {
+        //    if (sourceDataGrid.SelectedCells.Count > 0) {
 
-                DataGridViewCell cell = sourceDataGrid.SelectedCells[0];
-                name = sourcePath.Text + sourceDataGrid.Rows[cell.RowIndex].Cells["path"].Value.ToString();
-                Process p = Process.Start(name);
-            }
-        }
+        //        DataGridViewCell cell = sourceDataGrid.SelectedCells[0];
+        //        name = sourcePath.Text + sourceDataGrid.Rows[cell.RowIndex].Cells["path"].Value.ToString();
+        //        Process p = Process.Start(name);
+        //    }
+        //}
 
         /// <summary>
         /// コンテキストメニュー　フォルダを開く
@@ -489,9 +489,9 @@ namespace sift {
                 case Keys.U:
                     unmark();
                     break;
-                case Keys.O:
-                    p1OpenFile();
-                    break;
+                //case Keys.O:
+                //    p1OpenFile();
+                //    break;
                 case Keys.I:
                     p1OpenFolder();
                     break;

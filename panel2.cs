@@ -111,25 +111,25 @@ namespace sift {
                 targetDataGrid.Rows[cur].Selected = true;
         }
 
-        /// <summary>
-        /// コンテキストメニュー　ファイルを開く
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void openFileToolStripMenuItem1_Click(object sender, EventArgs e) {
-            p2OpenFile();
-        }
+        ///// <summary>
+        ///// コンテキストメニュー　ファイルを開く
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //private void openFileToolStripMenuItem1_Click(object sender, EventArgs e) {
+        //    p2OpenFile();
+        //}
 
-        private void p2OpenFile() {
-            String name;
+        //private void p2OpenFile() {
+        //    String name;
 
-            if (targetDataGrid.SelectedCells.Count > 0) {
+        //    if (targetDataGrid.SelectedCells.Count > 0) {
 
-                DataGridViewCell cell = targetDataGrid.SelectedCells[0];
-                name = sourcePath.Text + targetDataGrid.Rows[cell.RowIndex].Cells["path"].Value.ToString();
-                Process p = Process.Start(name);
-            }
-        }
+        //        DataGridViewCell cell = targetDataGrid.SelectedCells[0];
+        //        name = sourcePath.Text + targetDataGrid.Rows[cell.RowIndex].Cells["path"].Value.ToString();
+        //        Process p = Process.Start(name);
+        //    }
+        //}
 
         /// <summary>
         /// コンテキストメニュー　フォルダを開く
@@ -292,9 +292,9 @@ namespace sift {
                 case Keys.R:
                     p2Remove();
                     break;
-                case Keys.O:
-                    p2OpenFile();
-                    break;
+                //case Keys.O:
+                //    p2OpenFile();
+                //    break;
                 case Keys.I:
                     p2OpenFolder();
                     break;

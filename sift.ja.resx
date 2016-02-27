@@ -191,12 +191,6 @@
   <data name="toolStripSeparator5.Size" type="System.Drawing.Size, System.Drawing">
     <value>180, 6</value>
   </data>
-  <data name="openFileToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-    <value>183, 22</value>
-  </data>
-  <data name="openFileToolStripMenuItem.Text" xml:space="preserve">
-    <value>開く (&amp;O)</value>
-  </data>
   <data name="openFolderToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>183, 22</value>
   </data>
@@ -204,7 +198,7 @@
     <value>ファイルの場所を開く (&amp;I)</value>
   </data>
   <data name="panel1ContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>184, 214</value>
+    <value>184, 192</value>
   </data>
   <data name="removeToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>183, 22</value>
@@ -254,12 +248,6 @@
   <data name="toolStripSeparator6.Size" type="System.Drawing.Size, System.Drawing">
     <value>180, 6</value>
   </data>
-  <data name="openFileToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>183, 22</value>
-  </data>
-  <data name="openFileToolStripMenuItem1.Text" xml:space="preserve">
-    <value>開く (&amp;O)</value>
-  </data>
   <data name="openFolderToolStripMenuItem1.Size" type="System.Drawing.Size, System.Drawing">
     <value>183, 22</value>
   </data>
@@ -267,7 +255,7 @@
     <value>ファイルの場所を開く (&amp;I)</value>
   </data>
   <data name="panel2ContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>184, 214</value>
+    <value>184, 192</value>
   </data>
   <data name="tbQuery.ToolTip" xml:space="preserve">
     <value>%(パーセント)と_(アンダースコアー)の２種類の
@@ -329,7 +317,7 @@
     <value>パターン表示 (&amp;S)</value>
   </data>
   <data name="panel3ContextMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 126</value>
+    <value>179, 148</value>
   </data>
   <data name="propertiesToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
     <value>113, 22</value>
