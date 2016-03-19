@@ -72,14 +72,16 @@ namespace sift {
 
             if (label4.Text == Properties.Resources.fc_notuse) {
                 // FastCopyを使用する
-                setProg(prog);
-                fastcopyStructureIgnore = false;
-                label4.Text = Properties.Resources.fc_use;
+                if (setProg(prog)) {
+                    fastcopyStructureIgnore = false;
+                    label4.Text = Properties.Resources.fc_use;
+                }
             } else if (label4.Text == Properties.Resources.fc_use) {
                 // FastCopyをフォルダ構造無視の時だけ使用
-                setProg(prog);
-                fastcopyStructureIgnore = true;
-                label4.Text = Properties.Resources.fc_ignore;
+                if (setProg(prog)) {
+                    fastcopyStructureIgnore = true;
+                    label4.Text = Properties.Resources.fc_ignore;
+                }
             } else {
                 // FastCopyを使用しない
                 fastcopy = "";
@@ -88,13 +90,13 @@ namespace sift {
             }
         }
 
-        private void setProg(string prog) {
+        private bool setProg(string prog) {
             string progfiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
             // 64bit : Program Files (x86)
             // 32bit : Program Files
             if (System.IO.File.Exists(progfiles + prog)) {
                 fastcopy = progfiles + prog;
-                return;
+                return true;
             }
 
             // 64bit : Program Files
@@ -102,11 +104,12 @@ namespace sift {
                 progfiles = progfiles.Replace(" (x86)", "");
                 if (System.IO.File.Exists(progfiles + prog)) {
                     fastcopy = progfiles + prog;
-                    return;
+                    return true;
                 }
             }
             // FastCopy.exe が見つかりません
             MessageBox.Show(Properties.Resources.notfound);
+            return false;
         }
 
         /// <summary>

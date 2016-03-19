@@ -301,18 +301,29 @@ namespace sift {
             if (e.KeyCode == Keys.Return) {
                 // 文字が入力されていること
                 if (tbFormat.Text.Length > 0) {
-             
+                    DataRow data_row;
+                    // マウスカーソル変更
+                    Cursor preCursor = this.Cursor;
+                    this.Cursor = Cursors.WaitCursor;
+
                     Rename rn = new Rename(tbFormat.Text);
                     rn.Setup(renameDataGrid.Rows.Count.ToString().Length);
+                    clsRename();
 
                     // 名前変更処理
-                    for (int i = 0; i < renameDataGrid.Rows.Count; i++) {
-                        renameDataGrid.Rows[i].Cells["file"].Value =
-                            rn.convert(targetDataGrid.Rows[i].Cells["file"].Value.ToString());
-                        renameDataGrid.Rows[i].Cells["path"].Value =
-                            Path.GetDirectoryName(targetDataGrid.Rows[i].Cells["path"].Value.ToString())
-                            + "\\" + renameDataGrid.Rows[i].Cells["file"].Value;
+                    for (int i = 0; i < targetDataGrid.Rows.Count; i++) {
+                        data_row = dtRename.NewRow();
+                        data_row["file"] = rn.convert(targetDataGrid.Rows[i].Cells["file"].Value.ToString());
+                        data_row["path"] = Path.GetDirectoryName(targetDataGrid.Rows[i].Cells["path"].Value.ToString())
+                            + "\\" + data_row["file"];
+                        data_row["Id"] = targetDataGrid.Rows[i].Cells["Id"].Value.ToString();
+                        data_row["size"] = targetDataGrid.Rows[i].Cells["size"].Value.ToString();
+                        data_row["date"] = targetDataGrid.Rows[i].Cells["date"].Value.ToString();
+                        dtRename.Rows.Add(data_row);
                     }
+                    renameDataGrid.DataSource = dtRename;
+                    clearFocus();
+                    this.Cursor = preCursor;
                 }
             }
         }
